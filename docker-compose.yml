@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  dumudp-server:
+    image: eexit/dumudp-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8125:8125/udp
+    volumes:
+      - .:/usr/src/app
+    links:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:
