@@ -23,6 +23,11 @@ Check on the container log:
     172.17.0.1:43596 >>> dumudp-server.test.counter:1|c
     172.17.0.1:39459 >>> dumudp-server.test.counter:1|c
 
+
+Docker compose up Command 
+`docker-compose up --build`
+
+
 ### Change the port
 
 Default port is `8125` but you can change the port by running the container like this (here set the port `28900` up):
