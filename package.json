@@ -1,29 +1,16 @@
 {
-  "name": "dumudp-server",
-  "version": "1.1.0",
-  "description": "Dummy UDP server that dumps in STDOUT incoming messages",
-  "main": "server.js",
+  "name": "web-sockets",
+  "version": "1.0.0",
+  "description": "Using websockets to create a duplex communication app",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
-  "keywords": [
-    "udp",
-    "server",
-    "nodejs",
-    "docker",
-    "development",
-    "mirror",
-    "server",
-    "dummy"
-  ],
-  "author": "Joris Berthelot <admin@eexit.net>",
-  "license": "MIT",
-  "homepage": "https://github.com/eexit/dumudp-server",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:eexit/dumudp-server.git"
-  },
+  "author": "janakastill@gmail.com",
+  "license": "ISC",
   "dependencies": {
-    "mongoose": "^5.12.13"
+    "http": "0.0.1-security",
+    "websocket": "^1.0.31"
   }
 }

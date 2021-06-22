@@ -1,23 +1,28 @@
 version: '3.4'
 
 services:
-  dumudp-server:
-    image: eexit/dumudp-server
+  # dumudp-server:
+  #   image: eexit/dumudp-server
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 8125:8125/udp
+  #   volumes:
+  #     - .:/usr/src/app
+  #   links:
+  #     - mongodb
+  websocketserver:
+    container_name: websocketserver
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 8125:8125/udp
+      - 8126:8126/udp
     volumes:
       - .:/usr/src/app
     links:
       - mongodb
-  mongodb:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    volumes:
-      - data:/data/db
   frontend:
     container_name: frontend
     build: ./frontend
@@ -30,6 +35,11 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: npm start
-
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
 volumes:
   data:
