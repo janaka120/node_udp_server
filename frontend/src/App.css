@@ -1,72 +1,57 @@
-.App {
-    text-align: center;
+a { 
+  color:#ff6e54;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+a:hover, a:active {
+  color:#ffa600;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.title {
+  padding:1em 1em 2em 2em;
+  max-width: 500px;
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+.app{
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-wrapper {
+  padding: 10px;
+  display: flex;
+}
+
+.sub-wrapper {
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    align-content: space-around;
+    
+  
 }
 
-.App-link {
-    color: #61dafb;
+.main.chart-wrapper {
+  height: 250px;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.sub.chart-wrapper {
+  height: 250px;
+  width: 80%;
+
 }
 
-.wrapper {
-    position: relative;
-    top: 0;
-    height: 100vh;
+.doughnut{
+  margin: 0 auto;
 }
 
-.main-panel {
-    position: relative;
-    float: right;
-    width: 100%;
-    min-height: 100vh;
-    /* border-top: 2px solid #e14eca; */
-    border-top: 2px solid #1d8cf8;
-    background: linear-gradient(#1e1e2f, #1e1e24);
-    -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-}
-
-.main-panel>.content {
-    padding: 78px 30px 30px 280px;
-    min-height: calc(100vh - 70px);
-}
-
-.main-panel>.navbar {
-    margin-bottom: 0;
-}
-
-.main-panel .header {
-    margin-bottom: 50px;
+@media (min-width: 700px) {
+  .sub-wrapper{
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
