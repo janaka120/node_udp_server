@@ -62,3 +62,6 @@ Mongo DB shell commands
 - Insert recode to collection `db.user.insert({"name": "Ajitesh Shukla", "location": "hyderabad", "username": "eajitesh"})`
 - Display list of records of a *user* collection `db.user.find().pretty()`
 
+DOCKER references
+- https://github.com/switch120/sample-react-docker
+- https://github.com/bbachi/react-nodejs-example

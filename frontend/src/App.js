@@ -11,7 +11,7 @@ import './App.css';
 // import * as mongoose from "mongoose";
 import { connect, connection } from 'mongoose';
 
-const {Todos} = require('./models/todos'); 
+// const {Todos} = require('./models/todos'); 
 
 
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
     // Don't call this.setState() here!
     this.state = { feeds: data() };
     
-    connect('mongodb://mongodb:27017/test', {useNewUrlParser: true});
+    // connect('mongodb://mongodb:27017/test', {useNewUrlParser: true});
     // this.db = mongoose.connection;
     // this.db = connection;
     // this.handleClick = this.handleClick.bind(this);
@@ -36,6 +36,13 @@ class App extends Component {
         feeds: data(),
       });
     }, 5000);
+
+    // fetch('http://192.168.9.100:3005/api/test')
+    // .then(response => response.json())
+    // .then(todos => console.log('todos >>>', todos));
+    fetch('/api/test')
+    .then(response => response.json())
+    .then(todos => console.log('todos >>>', todos));
     
     // this.db.on('error', console.error.bind(console, 'CONNECTION ERROR FRONT END---'));
     // this.db.once('open', function() {

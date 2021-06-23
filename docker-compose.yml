@@ -1,23 +1,24 @@
 version: '3.4'
 
 services:
-  dumudp-server:
-    image: eexit/dumudp-server
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 8125:8125/udp
-    volumes:
-      - .:/usr/src/app
-    links:
-      - mongodb
+  # dumudp-server:
+  #   image: eexit/dumudp-server
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 8125:8125/udp
+  #   volumes:
+  #     - .:/usr/src/app
+  #   links:
+  #     - mongodb
   mongodb:
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
       - data:/data/db
+    # network_mode: service:frontend       # share this network with React service
   frontend:
     container_name: frontend
     build: ./frontend
@@ -25,11 +26,28 @@ services:
       - './:/app'
       - '/app/node_modules'
     ports:
-      - 3000:3000
+      - 3000:3000                     # defines port mapping for React dev server
+      - 3001:3001                     # defines port mapping for Express API server
     stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: npm start
+  #   links:
+  #     - mongodb
+  api:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.express 
+    # image: local/express
+    image: nodeexpressmongo20200213
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules/    # mounts empty folder so npm can install on the image
+    restart: always
+    network_mode: service:frontend       # share this network with React service so the proxy in package.json will work correctly
+    environment:
+      - PORT=3005
+      - CHOKIDAR_USEPOLLING=true      # enable fs event forwarding for file change detection (webpack)
     links:
       - mongodb
 volumes:

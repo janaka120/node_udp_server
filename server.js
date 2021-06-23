@@ -14,7 +14,7 @@ db.once('open', function() {
   console.log('Connected to MongoDB...') 
 });
 
-var {Todos} = require('./models/todos'); 
+var {Todos} = require('./models/todos');
 
 let isLftAccExceed = false; 
 let monitorStartTime = 0; // timestamp in seconds
