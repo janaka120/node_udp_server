@@ -8,7 +8,8 @@ require('dotenv').config();
 var app = express();
 var PORT = process.env.PORT || 3005;
 
-
+var cors = require('cors')
+app.use(cors()) // Use this after the variable declaration
 
 // Mongo DB connection ========================================
 var {Todos} = require('./models/todos');
@@ -40,11 +41,19 @@ if (process.env.NODE_ENV === "production") {
 
 // Basic route
 app.get("/api/test", function(req, res) {
-    Todos.find(function (err, todos) {
-      if (err) return console.error("FRONTEND Error retrieve data from Todos schema --->>>", err);
-      console.log('FRONTEND todos --- >>>', todos);
-    });
-  res.json({status: "success"});
+  // let todosList = null;
+  const responseObj = {
+    status: "fail",
+    data: null
+  };
+  Todos.find(function (err, todos) {
+    if (err) return console.error("FRONTEND Error retrieve data from Todos schema --->>>", err);
+    console.log('FRONTEND todos --- >>>', todos);
+    // todosList = todos;
+    responseObj.status = "success";
+    responseObj.data = todos;
+  });
+  res.json(responseObj);
 });
 
 // Starts the server to begin listening

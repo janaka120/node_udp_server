@@ -19,19 +19,19 @@ services:
     volumes:
       - data:/data/db
     # network_mode: service:frontend       # share this network with React service
-  frontend:
-    container_name: frontend
-    build: ./frontend
-    volumes:
-      - './:/app'
-      - '/app/node_modules'
-    ports:
-      - 3000:3000                     # defines port mapping for React dev server
-      - 3001:3001                     # defines port mapping for Express API server
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: npm start
+  # frontend:
+  #   container_name: frontend
+  #   build: ./frontend
+  #   volumes:
+  #     - './:/app'
+  #     - '/app/node_modules'
+  #   ports:
+  #     - 3000:3000                     # defines port mapping for React dev server
+  #     - 3001:3001                     # defines port mapping for Express API server
+  #   stdin_open: true
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true      # enable fs event forwarding for file change detection (webpack)
+  #   command: npm start
   #   links:
   #     - mongodb
   api:
@@ -44,7 +44,9 @@ services:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules/    # mounts empty folder so npm can install on the image
     restart: always
-    network_mode: service:frontend       # share this network with React service so the proxy in package.json will work correctly
+    # network_mode: service:frontend       # share this network with React service so the proxy in package.json will work correctly
+    ports:
+      - '3005:3005'
     environment:
       - PORT=3005
       - CHOKIDAR_USEPOLLING=true      # enable fs event forwarding for file change detection (webpack)

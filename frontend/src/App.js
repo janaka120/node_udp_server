@@ -40,7 +40,7 @@ class App extends Component {
     // fetch('http://192.168.9.100:3005/api/test')
     // .then(response => response.json())
     // .then(todos => console.log('todos >>>', todos));
-    fetch('/api/test')
+    fetch('http://localhost:3005/api/test')
     .then(response => response.json())
     .then(todos => console.log('todos >>>', todos));
     
@@ -65,12 +65,12 @@ class App extends Component {
     return (
       <div className="app">
         <div className="title">
-          <h1>React Dashboard Demo</h1>
+          <h1>Dashboard</h1>
           <p>
-            Built with React.js and Chart.js based on a project by{" "}
-            <a href="https://www.createwithdata.com/react-chartjs-dashboard/">
+            You can see realtime data visulationation
+            {/* <a href="https://www.createwithdata.com/react-chartjs-dashboard/">
               Create with Data
-            </a>
+            </a> */}
           </p>
         </div>
 
@@ -97,7 +97,7 @@ class App extends Component {
               color="#ff6e54"
             />
           </div>
-          <div className="sub chart-wrapper doughnut">
+          {/* <div className="sub chart-wrapper doughnut">
             <Doughnut
               data={this.state.feeds[2].data}
               title={this.state.feeds[2].title}
@@ -110,7 +110,7 @@ class App extends Component {
                 "#ffa600",
               ]}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     );

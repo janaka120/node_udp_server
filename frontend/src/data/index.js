@@ -21,7 +21,7 @@ const getRandomDateArray = (numItems) => {
 export default () => {
   return [
     {
-      title: "Visits",
+      title: "User activities",
       data: getRandomDateArray(150),
     },
 

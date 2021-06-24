@@ -65,3 +65,6 @@ Mongo DB shell commands
 DOCKER references
 - https://github.com/switch120/sample-react-docker
 - https://github.com/bbachi/react-nodejs-example
+
+
+IMPORTANT: If you modify /api/package.json or /api/.env you will need to run `docker-compose build` to update the image
