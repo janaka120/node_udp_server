@@ -12,16 +12,34 @@ var cors = require('cors')
 app.use(cors()) // Use this after the variable declaration
 
 // Mongo DB connection ========================================
-var {Todos} = require('./models/todos');
-
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://mongodb:27017/test', {useNewUrlParser: true});
+
+var {UserActivities} = require('./models/user_activities');
+
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'CONNECTION ERROR'));
 db.once('open', function() {
   // we're connected to DB
-  console.log('Connected to MongoDB...')
+  console.log('Connected to MongoDB...');
+  // setInterval(() => {
+  //     const randomMathBaseValue = Math.round(20 + 80 * Math.random());
+  //     const userActivityObj = {
+  //       userId: 'user_001',
+  //       acc: randomMathBaseValue + 1000,
+  //       w: randomMathBaseValue + 220,
+  //       accX: randomMathBaseValue + 65,
+  //       accY: randomMathBaseValue + 98,
+  //       accZ: randomMathBaseValue + 32.45,
+  //       gyroX: randomMathBaseValue + 60,
+  //       gyroY: randomMathBaseValue + 12.43,
+  //       gyroZ: randomMathBaseValue + 78.54
+  //     };
+  //     saveUserActivityToDB(userActivityObj);
+  // }, 500);
+  
 });
 
 
@@ -39,21 +57,25 @@ if (process.env.NODE_ENV === "production") {
 // Routes
 // =============================================================
 
-// Basic route
-app.get("/api/test", function(req, res) {
-  // let todosList = null;
+// Get User Activities route
+app.get("/api/user-activities", function(req, res) {
   const responseObj = {
     status: "fail",
     data: null
   };
-  Todos.find(function (err, todos) {
-    if (err) return console.error("FRONTEND Error retrieve data from Todos schema --->>>", err);
-    console.log('FRONTEND todos --- >>>', todos);
-    // todosList = todos;
+  const start = new Date(new Date().getTime() - (1 * 60 * 60 * 1000)); // last 1 hour Date-time  
+  // console.log("new Date().getTime() >>>>", new Date().getTime());
+  // console.log("24 * 60 * 60 * 1000 >>>>", 24 * 60 * 60 * 1000);
+  // console.log("start >>>>", start);
+  UserActivities.find({ "created_at": { "$gte": start } }, function (err, activities) {
+    if (err) {
+      console.error("Error -> retrieve data from USerActivities schema >>", err)
+      return  res.json(responseObj);
+    };
     responseObj.status = "success";
-    responseObj.data = todos;
+    responseObj.data = activities;
+    return res.json(responseObj);
   });
-  res.json(responseObj);
 });
 
 // Starts the server to begin listening
@@ -62,66 +84,23 @@ app.listen(PORT, function() {
   console.log("API endpoint listening on PORT " + PORT);
 });
 
-
-// -----------------------------------------------------------
-// var createError = require('http-errors');
-// var express = require('express');
-// var path = require('path');
-// var cookieParser = require('cookie-parser');
-// var logger = require('morgan');
-
-// // var mongoose = require('mongoose');
-// // mongoose.connect('mongodb://mongodb:27017/test', {useNewUrlParser: true});
-
-// // var db = mongoose.connection;
-// // db.on('error', console.error.bind(console, 'CONNECTION ERROR'));
-// // db.once('open', function() {
-// //   // we're connected to DB
-// //   console.log('Connected to MongoDB...')
-// // });
-
-// // var {Todos} = require('./models/todos');
-
-// var app = express();
-// var PORT = process.env.PORT || 3005;
-
-// app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
-
-// // error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
-
-// // Basic route
-// app.get("/api/test", function(req, res) {
-//   console.log('/api/test working -------- **** >>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-//   // Todos.find(function (err, todos) {
-//   //     if (err) return console.error("FRONTEND Error retrieve data from Todos schema --->>>", err);
-//   //     console.log('FRONTEND todos --- >>>', todos);
-//   //   });
-//   res.json({status: "success"});
-// })
-
-// // Starts the server to begin listening
-// // =============================================================
-// app.listen(PORT, function() {
-//   console.log("API endpoint listening on PORT " + PORT);
-// });
-
-// module.exports = app;
+const saveUserActivityToDB = (activity) => {
+  var userActivityData = new UserActivities({
+    userId: activity.userId,
+    acc: activity.acc,
+    w: activity.w,
+    accX: activity.accX,
+    accY: activity.accY,
+    accZ: activity.accZ,
+    gyroX: activity.gyroX,
+    gyroY: activity.gyroY,
+    gyroZ: activity.gyroZ,
+  });
+  userActivityData.save()
+  .then(item => {
+    console.log("User Activity Saved to DB...");
+  })
+  .catch(err => {
+    console.log("User Activity Unable to save to DB...");
+  });
+}

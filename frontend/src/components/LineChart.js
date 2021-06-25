@@ -10,15 +10,17 @@ class LineChart extends Component {
         
     }
    componentDidUpdate() {
-       const {data} = this.props;
-       this.myChart.data.labels = data.map(d => d.time);
-       this.myChart.data.datasets[0].data = data.map(d => d.value)
+       const {time, value} = this.props.data;
+    //    this.myChart.data.labels = data.map(d => d.time);
+    //    this.myChart.data.datasets[0].data = data.map(d => d.value)
+       this.myChart.data.labels = time;
+       this.myChart.data.datasets[0].data = value;
        this.myChart.update();
    }
 
     componentDidMount() {
         const {data, title, color} = this.props;
-       
+        const {time, value} = data;
         this.myChart = new Chart(this.chartRef.current,{
             type: 'line',
             options: {
@@ -35,7 +37,7 @@ class LineChart extends Component {
                           },
                             type: 'time',
                             time: {
-                                unit: 'week'
+                                unit: 'second'
                             }
                         }
                     ],
@@ -51,10 +53,10 @@ class LineChart extends Component {
                 }
             },
             data: {
-                labels: data.map(d=> d.time),
+                labels: time,
                 datasets: [{
                     label: title,
-                    data: data.map(d=> d.value),
+                    data: value,
                     fill: 'none',
                     backgroundColor: color,
                     pointRadius: 2,

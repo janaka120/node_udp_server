@@ -24,6 +24,7 @@
     "url": "git@github.com:eexit/dumudp-server.git"
   },
   "dependencies": {
+    "dgram": "^1.0.1",
     "mongoose": "^5.12.13"
   }
 }

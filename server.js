@@ -14,7 +14,8 @@ db.once('open', function() {
   console.log('Connected to MongoDB...') 
 });
 
-var {Todos} = require('./models/todos');
+// var {Todos} = require('./models/todos');
+var {UserActivities} = require('./api/models/user_activities');
 
 let isLftAccExceed = false; 
 let monitorStartTime = 0; // timestamp in seconds
@@ -62,6 +63,18 @@ server.on('message', function (message, remote) {
   const w = Math.sqrt((gyroX * gyroX) + (gyroY * gyroY) + (gyroZ * gyroZ));
   console.log("acc >>", acc, "gyro >>>", w);
 
+  const userActivityObj = {
+    userId: 'user_001',
+    acc: acc,
+    w: w,
+    accX: accX,
+    accY: accY,
+    accZ: accZ,
+    gyroX: gyroX,
+    gyroY: gyroY,
+    gyroZ: gyroZ
+  };
+
   // ** Separately need to be calculate lftAcc, uftAcc and uftGyro **
   const lftAcc = 0.325; //  LFT of acceleration  0.30g – 0.35g 
   const uftAcc = 2.4; // 2.4g
@@ -69,7 +82,8 @@ server.on('message', function (message, remote) {
 
   if(acc <= lftAcc && !isLftAccExceed) {
     isLftAccExceed = true;
-    saveToDB(message);
+    // saveToDB(message);
+    saveUserActivityToDB(userActivityObj);
     return;
   }
   if(isLftAccExceed && !isMonitorStarted) {
@@ -91,21 +105,43 @@ server.on('message', function (message, remote) {
     resetPredefineValues();
   }
   
-  saveToDB(message);
+  // saveToDB(message);
+  saveUserActivityToDB(userActivityObj);
 });
 
-const saveToDB = (message) => {
-  var myData = new Todos({
-      description: message,
-      complete: true
-    });
-    myData.save()
-    .then(item => {
-      console.log("Saved to DB...");
-    })
-    .catch(err => {
-      console.log("Unable to save to DB...");
-    });
+// const saveToDB = (message) => {
+//   var myData = new Todos({
+//       description: message,
+//       complete: true
+//     });
+//     myData.save()
+//     .then(item => {
+//       console.log("Saved to DB...");
+//     })
+//     .catch(err => {
+//       console.log("Unable to save to DB...");
+//     });
+// }
+
+const saveUserActivityToDB = (activity) => {
+  var userActivityData = new UserActivities({
+    userId: activity.userId,
+    acc: activity.acc,
+    w: activity.w,
+    accX: activity.accX,
+    accY: activity.accY,
+    accZ: activity.accZ,
+    gyroX: activity.gyroX,
+    gyroY: activity.gyroY,
+    gyroZ: activity.gyroZ,
+  });
+  userActivityData.save()
+  .then(item => {
+    console.log("User Activity Saved to DB...");
+  })
+  .catch(err => {
+    console.log("User Activity Unable to save to DB...");
+  });
 }
 
 const resetPredefineValues = () => {
