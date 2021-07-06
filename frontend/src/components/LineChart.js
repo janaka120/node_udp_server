@@ -1,6 +1,5 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import Chart from 'chart.js';
-import { findAllByTitle } from '@testing-library/react';
 
 
 class LineChart extends Component {
@@ -11,8 +10,6 @@ class LineChart extends Component {
     }
    componentDidUpdate() {
        const {time, value} = this.props.data;
-    //    this.myChart.data.labels = data.map(d => d.time);
-    //    this.myChart.data.datasets[0].data = data.map(d => d.value)
        this.myChart.data.labels = time;
        this.myChart.data.datasets[0].data = value;
        this.myChart.update();
@@ -26,14 +23,14 @@ class LineChart extends Component {
             options: {
                 legend:{
                     labels:{
-                        fontColor:'white'
+                        // fontColor:'white'
                     }
                 },
                 maintainAspectRatio: false,
                 scales: {
                     xAxes: [
                         {   gridLines:{
-                            color:'rgba(255,255,255, 0.1)'
+                            // color:'rgba(255,255,255, 0.1)'
                           },
                             type: 'time',
                             time: {
@@ -43,7 +40,7 @@ class LineChart extends Component {
                     ],
                     yAxes: [
                         {gridLines:{
-                            color:'rgba(255,255,255, 0.1)'
+                            // color:'rgba(255,255,255, 0.1)'
                           },
                             ticks: {
                                 min: 0

@@ -1,0 +1,58 @@
+.user-card-con {
+ margin-bottom: 10px;
+}
+.user-card-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+.user-card-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+    flex: 1;
+}
+
+.user-card-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+}
+.user-card-content-col-1 {
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+}
+.user-card-content-col-1-title {
+    margin-right: 5px;
+}
+
+.user-card-content-col-1-content {
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+}
+
+.user-card-content-bottom {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+.user-card-content-bottom-con {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 8px;
+    margin-top: 5px;
+}
+.user-card-content-state-con {
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+}
+.add-btn-con {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
